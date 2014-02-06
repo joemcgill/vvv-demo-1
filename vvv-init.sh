@@ -1,11 +1,15 @@
 # Init script for VVV Auto Bootstrap Demo 1
 
-echo "Commencing VVV Demo 1 Setup"
+echo "Commencing [sitename] Setup"
 
 # Make a database, if we don't already have one
 echo "Creating database (if it's not already there)"
 mysql -u root --password=root -e "CREATE DATABASE IF NOT EXISTS vvv_demo_1"
 mysql -u root --password=root -e "GRANT ALL PRIVILEGES ON vvv_demo_1.* TO wp@localhost IDENTIFIED BY 'wp';"
+
+# Import the database from an sql file in the current directory
+echo "Importing the database"
+mysql -u root --password=root database_name < file.sql
 
 # Download WordPress
 if [ ! -d htdocs ]
@@ -19,6 +23,8 @@ then
 	cd ..
 fi
 
-# The Vagrant site setup script will restart Nginx for us
+# Other options would be to create htdocs folder from a project repo like:
+# git clone git@github.com/joemcgill/vvv-demo-1 htdocs
 
-echo "VVV Demo 1 site now installed";
+# The Vagrant site setup script will restart Nginx for us
+echo "[sitename] now installed";
